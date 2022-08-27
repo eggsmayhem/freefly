@@ -9,14 +9,20 @@
 </head>
 <body>
     <h1>Songs</h1>
-   <% if (typeof songTitle !== 'undefined' && songTitle){  %>
-        <div><%= songTitle %></div>
-        <div>Hi</div>
-    <% } %>
+    <ul class = "songList">
+        <% if (typeof arr !== 'undefined' && arr.length !== 0){  %>
+            <% arr.forEach( song => { %>
+                <li class = "songItem">
+                    <span><%= song %></span>
+                </li>
+            <% }) %>  
+        <% } %>
+
+    </ul>
 
     
     
-    <form action="/fetch/fetchSong" method='POST'>
+    <form action="/fetch" method='POST'>
         <input type="text" placeholder="Enter Todo Item" name='songTitle'>
         <input type="submit">
     </form>

@@ -4,6 +4,6 @@ const fetchController = require('../controllers/fetch')
 
 router.get('/', fetchController.getFetch)
 
-router.post('/fetchSong', fetchController.fetchSong)
+router.post('/', fetchController.fetchSong)
 
 module.exports = router 
