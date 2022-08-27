@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch a song!</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Songs</h1>
+   <% if (typeof songTitle !== 'undefined' && songTitle){  %>
+        <div><%= songTitle %></div>
+        <div>Hi</div>
+    <% } %>
+
+    
+    
+    <form action="/fetch/fetchSong" method='POST'>
+        <input type="text" placeholder="Enter Todo Item" name='songTitle'>
+        <input type="submit">
+    </form>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
