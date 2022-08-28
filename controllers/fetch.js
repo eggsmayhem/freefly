@@ -16,9 +16,11 @@ module.exports = {
 
     fetchSong: async (req, res) => {
         try {
+            //GET VERSIONS FROM SHAZAM
             const song = await req.body.songTitle
             // console.log(songTitle)
             // const arr = songTitle.split(',')
+            const formattedSong = song.split(' ').join('-')
            
         
             const options = {
@@ -32,10 +34,27 @@ module.exports = {
               }
             const response = await axios.request(options)
             const arr = Array.from(response.data.artists.hits).map(item=>item.artist.name)
-            console.log(arr)
+            const arrFormatted = arr.map(x => x.split(' ').join('-'))
+            console.log(arrFormatted)
             //seems to be missing the last artist 
-            res.render('fetch.ejs', {arr: arr})
+            // res.render('fetch.ejs', {arr: arr})
             // res.render('fetch.js', {arr: song})
+
+            //END SHAZAM
+
+            //GET VIDEOIDS FROM YOUTUBE 
+            //before prod, get key out of url 
+            const youtubeOptions = {
+                method: 'get',
+                url: `https://www.googleapis.com/youtube/v3/search/?key=${process.env.YOUTUBE_API_KEY}&part=snippet&q=${formattedSong}-${arrFormatted[0]}`,
+                headers: { }
+            } 
+            
+            const youtubeData = await axios(youtubeOptions)
+            const data = youtubeData.data.items[0].id.videoId
+            console.log(data)
+            res.render('fetch.ejs', {arr: arr, data: data})
+            
         }
         catch(err) {
             console.log(err)
