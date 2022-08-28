@@ -44,16 +44,22 @@ module.exports = {
 
             //GET VIDEOIDS FROM YOUTUBE 
             //before prod, get key out of url 
-            const youtubeOptions = {
-                method: 'get',
-                url: `https://www.googleapis.com/youtube/v3/search/?key=${process.env.YOUTUBE_API_KEY}&part=snippet&q=${formattedSong}-${arrFormatted[0]}`,
-                headers: { }
-            } 
+
+            const videoIdArray = []
+
+            for (const artist of arrFormatted) {
+                const youtubeOptions = {
+                    method: 'get',
+                    url: `https://www.googleapis.com/youtube/v3/search/?key=${process.env.YOUTUBE_API_KEY}&part=snippet&q=${formattedSong}-${artist}`,
+                    headers: { }
+                } 
+                const youtubeData = await axios(youtubeOptions)
+                const data = youtubeData.data.items[0].id.videoId
+                console.log(data)
+                videoIdArray.push(data)
+            }
             
-            const youtubeData = await axios(youtubeOptions)
-            const data = youtubeData.data.items[0].id.videoId
-            console.log(data)
-            res.render('fetch.ejs', {arr: arr, data: data})
+            res.render('fetch.ejs', {arr: arr, videoIdArray: videoIdArray})
             
         }
         catch(err) {
