@@ -56,7 +56,9 @@ module.exports = {
                 const youtubeData = await axios(youtubeOptions)
                 const data = youtubeData.data.items[0].id.videoId
                 console.log(data)
-                videoIdArray.push(data)
+                if (!videoIdArray.includes(data)) {
+                    videoIdArray.push(data)
+                }     
             }
             
             res.render('fetch.ejs', {arr: arr, videoIdArray: videoIdArray})
